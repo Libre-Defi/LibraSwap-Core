@@ -6,7 +6,7 @@ import './libraries/Math.sol';
 import './libraries/UQ112x112.sol';
 import './interfaces/IBEP20.sol';
 import './interfaces/ILibraFactory.sol';
-import './interfaces/ILibraCallee.sol';
+import './interfaces/ILibraCallee.sol'; 
 
 contract LibraPair is ILibraPair, LibraBEP20 {
     using SafeMath  for uint;
@@ -18,6 +18,8 @@ contract LibraPair is ILibraPair, LibraBEP20 {
     address public factory;
     address public token0;
     address public token1;
+
+    address public libraTreasury;
 
     uint112 private reserve0;           // uses single storage slot, accessible via getReserves
     uint112 private reserve1;           // uses single storage slot, accessible via getReserves
@@ -88,6 +90,7 @@ contract LibraPair is ILibraPair, LibraBEP20 {
     // if fee is on, mint liquidity equivalent to 1/6th of the growth in sqrt(k)
     function _mintFee(uint112 _reserve0, uint112 _reserve1) private returns (bool feeOn) {
         address feeTo = ILibraFactory(factory).feeTo();
+        address charity = ILibraFactory(factory).charity();
         feeOn = feeTo != address(0);
         uint _kLast = kLast; // gas savings
         if (feeOn) {
@@ -98,7 +101,10 @@ contract LibraPair is ILibraPair, LibraBEP20 {
                     uint numerator = totalSupply.mul(rootK.sub(rootKLast));
                     uint denominator = rootK.mul(3).add(rootKLast);
                     uint liquidity = numerator / denominator;
-                    if (liquidity > 0) _mint(feeTo, liquidity);
+                    if (liquidity > 0) {
+                        _mint(charity, liquidity); //0.05% to charity
+                        _mint(feeTo, liquidity); //0.05% to treasure
+                    }
                 }
             }
         } else if (_kLast != 0) {

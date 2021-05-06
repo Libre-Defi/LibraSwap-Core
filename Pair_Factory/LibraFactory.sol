@@ -8,6 +8,8 @@ contract LibraFactory is ILibraFactory {
 
     address public feeTo;
     address public feeToSetter;
+    address public libraTreasury;
+    address public charity;
 
     mapping(address => mapping(address => address)) public getPair;
     address[] public allPairs;
@@ -42,6 +44,10 @@ contract LibraFactory is ILibraFactory {
     function setFeeTo(address _feeTo) external {
         require(msg.sender == feeToSetter, 'Libra: FORBIDDEN');
         feeTo = _feeTo;
+    }
+    function setCharity(address _charity) external {
+        require(msg.sender == feeToSetter, 'Libra: FORBIDDEN');
+        charity = _charity;
     }
 
     function setFeeToSetter(address _feeToSetter) external {

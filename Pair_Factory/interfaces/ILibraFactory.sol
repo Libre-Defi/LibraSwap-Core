@@ -5,6 +5,7 @@ interface ILibraFactory {
 
     function feeTo() external view returns (address);
     function feeToSetter() external view returns (address);
+    function charity() external view returns (address);
 
     function getPair(address tokenA, address tokenB) external view returns (address pair);
     function allPairs(uint) external view returns (address pair);
@@ -13,5 +14,6 @@ interface ILibraFactory {
     function createPair(address tokenA, address tokenB) external returns (address pair);
 
     function setFeeTo(address) external;
+    function setCharity(address) external;
     function setFeeToSetter(address) external;
 }
