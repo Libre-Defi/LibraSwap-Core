@@ -167,7 +167,7 @@ contract LibraPair is ILibraPair, LibraBEP20 {
         (uint112 _reserve0, uint112 _reserve1,) = getReserves(); // gas savings
         require(amount0Out < _reserve0 && amount1Out < _reserve1, 'Libra: INSUFFICIENT_LIQUIDITY');
 
-        uint balance0;
+        uint balance0; 
         uint balance1;
         { // scope for _token{0,1}, avoids stack too deep errors
         address _token0 = token0;

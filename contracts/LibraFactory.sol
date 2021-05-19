@@ -5,7 +5,7 @@ import './LibraPair.sol';
 
 contract LibraFactory is ILibraFactory {
     bytes32 public constant INIT_CODE_PAIR_HASH = keccak256(abi.encodePacked(type(LibraPair).creationCode));
-
+ 
     address public feeTo;
     address public feeToSetter;
     address public libraTreasury;
