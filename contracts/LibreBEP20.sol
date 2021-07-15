@@ -1,12 +1,12 @@
 pragma solidity =0.5.16;
 
-import './interfaces/ILibraBEP20.sol';
+import './interfaces/ILibreBEP20.sol';
 import './libraries/SafeMath.sol';
 
-contract LibraBEP20 is ILibraBEP20 {
+contract LibreBEP20 is ILibreBEP20 {
     using SafeMath for uint;
 
-    string public constant name = 'Libra LPs';
+    string public constant name = 'Libre LPs';
     string public constant symbol = 'LIB-LP';
     uint8 public constant decimals = 18;
     uint  public totalSupply;
@@ -79,7 +79,7 @@ contract LibraBEP20 is ILibraBEP20 {
     }
 
     function permit(address owner, address spender, uint value, uint deadline, uint8 v, bytes32 r, bytes32 s) external {
-        require(deadline >= block.timestamp, 'Libra: EXPIRED');
+        require(deadline >= block.timestamp, 'Libre: EXPIRED');
         bytes32 digest = keccak256(
             abi.encodePacked(
                 '\x19\x01',
@@ -88,7 +88,7 @@ contract LibraBEP20 is ILibraBEP20 {
             )
         );
         address recoveredAddress = ecrecover(digest, v, r, s);
-        require(recoveredAddress != address(0) && recoveredAddress == owner, 'Libra: INVALID_SIGNATURE');
+        require(recoveredAddress != address(0) && recoveredAddress == owner, 'Libre: INVALID_SIGNATURE');
         _approve(owner, spender, value);
     }
 }
